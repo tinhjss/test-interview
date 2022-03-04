@@ -1,24 +1,34 @@
-import Head from "next/head";
-import styles from "../styles/Home.module.css";
-import DynamicText from "../components/DynamicText";
+import DynamicText from "components/DynamicText";
+import { Center, Input } from "@chakra-ui/react";
+import React, { useRef } from "react";
 
 const Home = () => {
+  const value = useRef<any>()
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
+    if(value?.current?.children?.length>0){
+      value.current.children[0].textContent= e.target.value || "Random Text"
+    }
   };
-
   return (
-    <div className={styles.container}>
-      <Head>
-        <title>Coding Test</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main className={styles.main}>
-        <DynamicText />
-        <input onChange={onChange} />
-      </main>
-    </div>
+    <Center 
+      w={"100%"} 
+      h={"100vh"} 
+      bg='white' 
+      flexDir={"column"} 
+      ref={value}
+    >
+      <DynamicText />
+      <Input
+        borderWidth={"1px"}
+        h={"21px"}
+        padding={1}
+        fontSize={"13px"}
+        borderRadius={"3px"}
+        borderColor={"black"}
+        _hover={{ borderColor: "black" }}
+        onChange={onChange} w={"147px"}
+      />
+    </Center>
   );
 };
 
